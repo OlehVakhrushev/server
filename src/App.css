@@ -35,4 +35,45 @@
   to {
     transform: rotate(360deg);
   }
+
+}
+
+.todo-background {
+  background: linear-gradient(to right bottom, #42afc0, #e3d122);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.in-progress-background {
+  background: linear-gradient(to right bottom, #57d9bb, #3734ae);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-background {
+  background: linear-gradient(to right bottom, #31177b, #700cd6);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.done-background {
+  background: linear-gradient(to right bottom, #e47ddd, #e01c6c);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background{
+  background: linear-gradient(to right bottom, #e47ddd, #e01c6c);
 }
