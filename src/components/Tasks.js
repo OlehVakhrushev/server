@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import EditTaskModal from "./EditTaskModal";
+import DeleteModal from "./DeleteModal";
 
-const Task = ({task, changePriority,priorities, statuses, editTask}) => {
+const Tasks = ({task, changePriority,priorities, statuses, editTask, moveTask, deleteTask}) => {
     console.log(task)
     const [modal, setModal] = useState(false);
 
@@ -31,13 +32,16 @@ const Task = ({task, changePriority,priorities, statuses, editTask}) => {
                         onClick={()=>changePriority(task._id, +task.priority - 1)}
                         type="button" className="btn btn-outline-info">↓</button></li>
                 <div>
-                    <button type="button" className="btn btn-outline-info">←</button>
-                    <button type="button" className="btn btn-outline-danger">Delete</button>
+                    <button type="button" disabled={statuses[0].title === task.status} className="btn btn-outline-info" onClick={()=> moveTask(task._id, task.status, -1)}>←</button>
+                    <DeleteModal task={task}
+                                 deleteTask={deleteTask}
+
+                    />
                     <button
                         onClick={toggle}
                         type="button" className="btn btn-outline-warning">Edit</button>
 
-                    <button type="button" className="btn btn-outline-info">→</button>
+                    <button type="button" disabled={statuses[statuses.length-1].title === task.status} className="btn btn-outline-info" onClick={()=> moveTask(task._id, task.status, +1)}>→</button>
 
                     <EditTaskModal
                         toggle={toggle}
@@ -57,4 +61,4 @@ const Task = ({task, changePriority,priorities, statuses, editTask}) => {
     );
 };
 
-export default Task;
+export default Tasks;

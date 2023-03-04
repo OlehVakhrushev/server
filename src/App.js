@@ -3,6 +3,7 @@ import './App.css';
 import {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Column from "./components/Column";
+import CreateModal from "./components/CreateModal";
 function App() {
     const[statuses,setStatuses]=useState([])
     const[tasks,setTasks]=useState([])
@@ -31,6 +32,7 @@ function App() {
                 alert('trouble');
             })
     }
+
 
     useEffect(()=>{
         getStatuses();
@@ -65,9 +67,47 @@ function App() {
     }
 
 
+    const moveTask = (id, oldStatus, direction) => {
+        const newStatuses = statuses.map((status)=> status.title);
+        const oldStatusIndex = newStatuses.indexOf(oldStatus);
+        const newStatusIndex = oldStatusIndex + direction;
+        const newStatus = newStatuses[newStatusIndex];
+        axios.patch(`https://expressjs-server.vercel.app/tasks/${id}`, {status: newStatus})
+            .then((res)=> {
+                getTasks()
+            }).catch((err)=> {
+                alert("Failed to move task")
+        })
+    }
+
+    const deleteTask = (id) => {
+        axios.delete(`https://expressjs-server.vercel.app/tasks/${id}`)
+            .then((res)=> {
+                getTasks()
+            }).catch((err)=> {
+                alert('Failed to delete task')
+        })
+    }
+
+    const createTask = (newTask) => {
+        axios.post(`https://expressjs-server.vercel.app/tasks/`, newTask)
+            .then((res)=> {
+                getTasks()
+            }).catch((err)=> {
+                alert('Failed to create new task')
+        })
+    }
+
+
     return (
         <div className="App">
             <h1>Kanban board</h1>
+            <CreateModal
+                statuses={statuses}
+                priorities={priorities}
+                createTask={createTask}
+
+            />
             {/*<button onClick={()=>updateTask("63961cc83be09ca981162e5f")}>update</button>*/}
             <div className="container  style={{border:'2px solid blue'}}">
                 <div className="row align-items-start ">
@@ -78,6 +118,8 @@ function App() {
                                 priorities={priorities}
                                 statuses={statuses}
                                 editTask={editTask}
+                                moveTask={moveTask}
+                                deleteTask={deleteTask}
                         />
                     )}
                 </div>
